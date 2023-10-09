@@ -16,6 +16,7 @@ public class Logement {
     int loyer;
     String type;
     String region;
+    
     public Logement(){
         super();
         
@@ -28,6 +29,10 @@ public class Logement {
         this.loyer = loyer;
         this.type = type;
         this.region = region;
+    }
+
+    public Logement(int id, String adr, int superfice, int loyer, String nomType, String nomRegion, String nomProvince, String nomCommune) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public int getId() {

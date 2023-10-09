@@ -21,12 +21,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import static java.util.Locale.filter;
+import static java.util.Locale.filter;
+import static java.util.Locale.filter;
+import static java.util.Locale.filter;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -37,10 +43,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import models.Locataire;
 import models.Logement;
 import projet.ConnexionMysql;
 
@@ -316,12 +324,143 @@ String sql = "INSERT INTO logement (adrL, superfice, loyer, type, region, provin
 
     @FXML
     private void modifierLogement() {
+        String adr = txt_adr.getText();
+    String superf = txt_superfice.getText();
+    int superfice = 0;
+    if (!superf.isEmpty()) {
+    try {
+        superfice = Integer.parseInt(superf);
+    } catch (NumberFormatException e) {
+        // Handle the case where the input is not a valid integer
+        // You can show an error message or take appropriate action here
     }
+}
+    String loy = txt_loyer.getText();
+    int loyer = Integer.parseInt(loy);
+    String typ = cb_type.getValue();
+    String sqll = "select idType from type where nomType='" + typ + "'";
+    int type = 0;
+    try {
+        st = cnx.prepareStatement(sqll);
+        result = st.executeQuery();
+        if (result.next()) {
+            type = result.getInt("idType");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    String reg = cb_region.getValue();
+    String sql2 = "select idRegion from region where nomRegion='" + reg + "'";
+    int region = 0;
+    try {
+        st = cnx.prepareStatement(sql2);
+        result = st.executeQuery();
+        if (result.next()) {
+            region = result.getInt("idRegion");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    String prov = cb_province.getValue();
+    String sql3 = "select idProvince from province where nomProvince='" + prov + "'";
+    int province = 0;
+    try {
+        st = cnx.prepareStatement(sql3);
+        result = st.executeQuery();
+        if (result.next()) {
+            province = result.getInt("idProvince");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    String com = cb_commune.getValue();
+    String sql4 = "select idCommune from commune where nomCommune='" + com + "'";
+    int commune = 0;
+    try {
+        st = cnx.prepareStatement(sql4);
+        result = st.executeQuery();
+        if (result.next()) {
+            commune = result.getInt("idCommune");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    File image = new File(lab_url.getText());
+    
+    // Use a prepared statement to safely update the logement record
+    String sql = "UPDATE logement SET adrL=?, superfice=?, loyer=?, type=?, region=?, province=?, commune=?, image=? WHERE idLogement=" + txt_searchid.getText();
+    try (PreparedStatement updateStatement = cnx.prepareStatement(sql)) {
+        updateStatement.setString(1, adr);
+        updateStatement.setInt(2, superfice);
+        updateStatement.setInt(3, loyer);
+        updateStatement.setInt(4, type);
+        updateStatement.setInt(5, region);
+        updateStatement.setInt(6, province);
+        updateStatement.setInt(7, commune);
+        updateStatement.setBinaryStream(8, new FileInputStream(image), (int) image.length());
+       // updateStatement.setString(9, txt_searchid.getText()); // Set idLogement using a parameter
+        
+        int rowsUpdated = updateStatement.executeUpdate();
+        
+        if (rowsUpdated > 0) {
+            showLogement();
+            lab_url.setText("aucune selectionée");
+            txt_adr.setText("");
+            txt_superfice.setText("");
+            txt_loyer.setText("");
+            txt_searchid.setText("");
+            cb_commune.setValue("commune");
+            cb_province.setValue("province");
+            cb_type.setValue("type");
+            cb_region.setValue("region");
+            image_logement.setImage(null);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Succès");
+            alert.setHeaderText(null);
+            alert.setContentText("Le logement a été modifié avec succès.");
+            alert.showAndWait();
+        } else {
+            // Handle the case where no rows were updated (record not found)
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText(null);
+            alert.setContentText("Le logement avec l'ID spécifié n'a pas été trouvé.");
+            alert.showAndWait();
+        }
+    } catch (SQLException | FileNotFoundException ex) {
+        ex.printStackTrace();
+    }
+}
 
     @FXML
     private void supprimerLogement() {
+        String sql= "delete from logement where idLogement ='"+txt_searchid.getText()+" '";
+        try {
+            st=cnx.prepareStatement(sql);
+            st.executeUpdate();
+            showLogement();
+            lab_url.setText("aucune selectionée");
+            txt_adr.setText("");
+               txt_superfice.setText("");
+            txt_loyer.setText("");
+            txt_searchid.setText("");
+            cb_commune.setValue("commune");
+              cb_province.setValue("province");
+                cb_type.setValue("type");
+                
+                
+                  cb_region.setValue("region");
+                  image_logement.setImage(null);
+                   Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Succès");
+            alert.setHeaderText(null);
+            alert.setContentText("Le logement a été supprimer avec succès.");
+            alert.showAndWait();
+        } catch (SQLException ex) {
+        }
+        
     }
-
+private ObservableList<Logement>logementList;
     @FXML
     private void importerImage() {
         FileChooser fc=new FileChooser();
@@ -338,9 +477,7 @@ String sql = "INSERT INTO logement (adrL, superfice, loyer, type, region, provin
         
     }
 
-    @FXML
-    private void searchLogement() {
-    }
+  
 @FXML
    /* private void tableLogEvent() {
    Logement logement = table_logement.getSelectionModel().getSelectedItem();
@@ -498,6 +635,223 @@ String sql = "INSERT INTO logement (adrL, superfice, loyer, type, region, provin
         cb_region.setItems(FXCollections.observableArrayList(types));
     }
     
+       
+     public ObservableList<Logement> LogementListData() {
+    ObservableList<Logement> logementList = FXCollections.observableArrayList();
+
+    String sql = "SELECT idLogement, adrL, superfice, loyer, nomType, nomRegion, nomProvince, nomCommune FROM logement, type, province, commune, region " +
+                 "WHERE logement.type = type.idType AND logement.region = region.idRegion AND logement.commune = commune.idCommune AND logement.province = province.idProvince";
+
+    try {
+        st = cnx.prepareStatement(sql);
+        result = st.executeQuery();
+
+        while (result.next()) {
+            int id = result.getInt("idLogement");
+            String adr = result.getString("adrL");
+            int superfice = result.getInt("superfice");
+            int loyer = result.getInt("loyer");
+            String nomType = result.getString("nomType");
+            String nomRegion = result.getString("nomRegion");
+            String nomProvince = result.getString("nomProvince");
+            String nomCommune = result.getString("nomCommune");
+
+            Logement logement = new Logement(id, adr, superfice, loyer, nomType, nomRegion, nomProvince, nomCommune);
+            logementList.add(logement);
+        }
+    } catch (SQLException ex) {
+        // Handle SQL exceptions
+        ex.printStackTrace();
+    }
+
+    return logementList;
+} 
+    @FXML
+    private void searchLogement() {
+        /*
+        String sql1 = "SELECT nomProvince FROM province";
+    String sql2 = "SELECT nomCommune FROM commune";
+    String sql3 = "SELECT idLogement, adrL, superfice, loyer, nomType, nomRegion, nomProvince, nomCommune, image " +
+                  "FROM logement, type, province, commune, region " +
+                  "WHERE logement.type = type.idType AND logement.region = region.idRegion " +
+                  "AND logement.commune = commune.idCommune AND logement.province = province.idProvince " +
+                  "AND idLogement = ?";
+    
+    try {
+        // Populate ComboBox for provinces
+        List<String> provinces = new ArrayList<>();
+        try (PreparedStatement stmt1 = cnx.prepareStatement(sql1);
+             ResultSet result1 = stmt1.executeQuery()) {
+            while (result1.next()) {
+                provinces.add(result1.getString("nomProvince"));
+            }
+        }
+        cb_province.setItems(FXCollections.observableArrayList(provinces));
+
+        // Populate ComboBox for communes
+        List<String> communes = new ArrayList<>();
+        try (PreparedStatement stmt2 = cnx.prepareStatement(sql2);
+             ResultSet result2 = stmt2.executeQuery()) {
+            while (result2.next()) {
+                communes.add(result2.getString("nomCommune"));
+            }
+        }
+        cb_commune.setItems(FXCollections.observableArrayList(communes));
+
+        // Get the selected Logement
+        Logement logement = table_logement.getSelectionModel().getSelectedItem();
+        if (logement == null) {
+            // Handle the case where no Logement is selected
+            return;
+        }
+
+        // Retrieve data based on the selected Logement
+        try (PreparedStatement stmt3 = cnx.prepareStatement(sql3)) {
+            stmt3.setInt(1, logement.getId());
+            try (ResultSet result3 = stmt3.executeQuery()) {
+                while (result3.next()) {
+                    int id = result3.getInt("idLogement");
+                    txt_searchid.setText(String.valueOf(id));
+                    txt_adr.setText(result3.getString("adrL"));
+                    int sur = result3.getInt("superfice");
+                    txt_superfice.setText(String.valueOf(sur));
+                    int loyer = result3.getInt("loyer");
+                    txt_loyer.setText(String.valueOf(loyer));
+                    cb_type.setValue(result3.getString("nomType"));
+                    cb_region.setValue(result3.getString("nomRegion"));
+                    cb_province.setValue(result3.getString("nomProvince"));
+                    cb_commune.setValue(result3.getString("nomCommune"));
+
+                    // Retrieve and display the image
+                    Blob blob = result3.getBlob("image");
+                    byte[] byteImage = blob.getBytes(1, (int) blob.length());
+                    Image img = new Image(new ByteArrayInputStream(byteImage), image_logement.getFitWidth(), image_logement.getFitHeight(), true, true);
+                    image_logement.setImage(img);
+                }
+            }
+        } catch (SQLException ex) {
+            // Handle SQL exceptions
+            ex.printStackTrace();
+            // You may want to show an error message to the user here
+        }
+    } catch (SQLException ex) {
+        // Handle SQL exceptions
+        ex.printStackTrace();
+        // You may want to show an error message to the user here
+    }
+}*/
+    /*
+        String sql = "SELECT nomProvince FROM province";
+        List<String> provinces = new ArrayList<>();
+        try {
+            st=cnx.prepareStatement(sql);
+             result=st.executeQuery();
+             {
+            while (result.next()) {
+                provinces.add(result.getString("nomProvince"));
+            }
+        }
+        cb_province.setItems(FXCollections.observableArrayList(provinces));
+
+        // Populate ComboBox for communes
+        String sql1 = "SELECT nomCommune FROM commune";
+        List<String> communes = new ArrayList<>();
+        try {
+            st=cnx.prepareStatement(sql1);
+             result=st.executeQuery(); 
+            while (result.next()) {
+                communes.add(result.getString("nomCommune"));
+            }
+        } catch (SQLException ex) {
+        // Handle SQL exceptions
+        ex.printStackTrace();
+        }
+        cb_commune.setItems(FXCollections.observableArrayList(communes));
+     //Logement logement = table_logement.getSelectionModel().getSelectedItem();
+        // Retrieve data based on the selected Logement
+        String sql2 = "SELECT idLogement, adrL, superfice, loyer, nomType, nomRegion, nomProvince, nomCommune, image FROM logement, type, province, commune, region  WHERE logement.type = type.idType AND logement.region = region.idRegion AND logement.commune = commune.idCommune AND logement.province = province.idProvince AND idLogement = ?";
+      
+        st=cnx.prepareStatement(sql2);
+          st.setString(1, txt_searchid.getText());
+          result=st.executeQuery();
+            
+                while (result.next()) {
+                    int id = result.getInt("idLogement");
+                    txt_searchid.setText(String.valueOf(id));
+                    txt_adr.setText(result.getString("adrL"));
+                    int sur = result.getInt("superfice");
+                    txt_superfice.setText(String.valueOf(sur));
+                    int loyer = result.getInt("loyer");
+                    txt_loyer.setText(String.valueOf(loyer));
+                    cb_type.setValue(result.getString("nomType"));
+                    cb_region.setValue(result.getString("nomRegion"));
+                    cb_province.setValue(result.getString("nomProvince"));
+                    cb_commune.setValue(result.getString("nomCommune"));
+
+                    // Retrieve and display the image
+                    Blob blob = result.getBlob("image");
+                    byte[] byteImage = blob.getBytes(1, (int) blob.length());
+                    Image img = new Image(new ByteArrayInputStream(byteImage), image_logement.getFitWidth(), image_logement.getFitHeight(), true, true);
+                    image_logement.setImage(img);
+                }
+            
+        
+    } catch (SQLException ex) {
+        // Handle SQL exceptions
+        ex.printStackTrace();
+    
+    }
+        
+        
+    
+    FilteredList<Logement> filter = new FilteredList<>(logementList, e -> true);
+
+        txt_searchid.textProperty().addListener((Observable, oldValue, newValue) -> {
+
+            filter.setPredicate(predicateLogement -> {
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String searchKey = newValue.toLowerCase();
+
+                /*if (predicateLogement.getId().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else*/ //if (predicateLogement.getAdr().toLowerCase().contains(searchKey)) {
+                    //return true;
+               // } else if (predicateLogement.getLastName().toLowerCase().contains(searchKey)) {
+                //    return true;
+               //   } else if (String.valueOf(predicateLogement.getSuperfice()).toLowerCase().contains(searchKey)) {
+              //      return true; 
+               //      } else if (predicateLogement.getRegion().toLowerCase().contains(searchKey)) {
+               //     return true; 
+               //      } else if (predicateLogement.getType().toLowerCase().contains(searchKey)) {
+               //     return true; 
+                 //    } else if (predicateLogement.getCommune().toLowerCase().contains(searchKey)) {
+                  //  return true; 
+                  //   } else if (String.valueOf(predicateLogement.getLoyer()).toLowerCase().contains(searchKey)) {
+                 //   return true; 
+              /* } else if (predicateLogement.getEtat().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (predicateLogement.getPhoneNumone().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (predicateLogement.getPhoneNumtwo().toLowerCase().contains(searchKey)) {
+                    return true;*/
+               // } else if (predicateLogement.getDateNaise().toString().contains(searchKey)) {
+                //    return true;
+              //  } else {
+            //        return false;
+           //     }
+    //        });
+    //    });
+
+    //     SortedList<Logement> sortList = new SortedList<>(filter);
+
+    //    sortList.comparatorProperty().bind(table_logement.comparatorProperty());
+    //    table_logement.setItems(sortList);  */
+    }
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
@@ -509,6 +863,8 @@ String sql = "INSERT INTO logement (adrL, superfice, loyer, type, region, provin
         }
     }
 
-    
-    
+  
 }
+    
+    
+

@@ -72,7 +72,7 @@ public class AccueilController implements Initializable {
         }
     //    System.out.println(position);
         
-        String sql4="select loyer, superfice, nomRegion,adrL,image from logement,region where region.idRegion=logement.region and idLogement not in (select logement from location)and idLogement <'"+position+"'";
+        String sql4="select loyer, superfice, nomRegion,adrL,image from logement,region where idLogement not in (select logement from location) and region.idRegion=logement.region and idLogement not in (select logement from location)and idLogement <'"+position+"'";
         int loyer=0;
       int superfice;
       
@@ -119,7 +119,7 @@ public class AccueilController implements Initializable {
         }
        // System.out.println(position);
         
-        String sql4="select loyer, superfice, nomRegion,adrL,image from logement,region where region.idRegion=logement.region and idLogement not in (select logement from location)and idLogement >'"+position+"'";
+        String sql4="select loyer, superfice, nomRegion,adrL,image from logement,region where idLogement not in (select logement from location) and region.idRegion=logement.region and idLogement not in (select logement from location)and idLogement >'"+position+"'";
         int loyer=0;
       int superfice;
       

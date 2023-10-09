@@ -17,10 +17,13 @@ public class Locataire {
     Date dateNaise;
     String tele;
     String cin ;
+   
+    
     public Locataire(){
         super();
         
     }
+    
     public Locataire(int id, String nom, Date date, String tele, String cin){
         this.id=id;
         this.nomprenom=nom;
@@ -30,6 +33,7 @@ public class Locataire {
         
         
     }
+    
 
     public Locataire(int aInt, String string, String string0, String string1, String string2, Date date) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

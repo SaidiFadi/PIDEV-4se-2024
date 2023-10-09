@@ -19,7 +19,7 @@
             <Font name="System Bold" size="17.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="txt_searchid" layoutX="174.0" layoutY="41.0" promptText="identifient" unFocusColor="#4688c9" />
+      <JFXTextField fx:id="txt_searchid" layoutX="174.0" layoutY="41.0" onKeyTyped="#searchLogement" promptText="identifient" unFocusColor="#4688c9" />
       <JFXTextField fx:id="txt_adr" layoutX="24.0" layoutY="84.0" prefHeight="25.0" prefWidth="243.0" promptText="Adresse" unFocusColor="#4688c9" />
       <JFXTextField fx:id="txt_superfice" layoutX="283.0" layoutY="84.0" promptText="Superfice" unFocusColor="#4688c9" />
       <JFXComboBox fx:id="cb_region" layoutX="24.0" layoutY="130.0" prefHeight="25.0" prefWidth="135.0" promptText="Region" unFocusColor="#4688c9" />
