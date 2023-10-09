@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="414.0" prefWidth="700.0" styleClass="backgrnd" stylesheets="@../projet/Application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <JFXTextField layoutX="159.0" layoutY="105.0" prefHeight="25.0" prefWidth="109.0" unFocusColor="#4688c9" />
+      <FontAwesomeIcon glyphName="SEARCH" layoutX="230.0" layoutY="57.0" />
+      <JFXTextField layoutX="14.0" layoutY="105.0" prefHeight="25.0" prefWidth="117.0" unFocusColor="#4688c9" />
+      <JFXComboBox layoutX="14.0" layoutY="41.0" prefHeight="25.0" prefWidth="199.0" promptText="location" unFocusColor="#4688c9" />
+      <ImageView fitHeight="317.0" fitWidth="313.0" layoutX="460.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="27.0" />
+      <JFXTextField layoutX="159.0" layoutY="168.0" prefHeight="25.0" prefWidth="109.0" unFocusColor="#4688c9" />
+      <JFXTextField layoutX="14.0" layoutY="168.0" prefHeight="25.0" prefWidth="117.0" unFocusColor="#4688c9" />
+      <Label layoutX="24.0" layoutY="88.0" text="locataire" textFill="#4688c9">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="159.0" layoutY="88.0" text="logement" textFill="#4688c9">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="12.0" layoutY="148.0" text="Adresse de logement" textFill="#4688c9">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="168.0" layoutY="148.0" text="Region" textFill="#4688c9">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <JFXTextField layoutX="163.0" layoutY="224.0" prefHeight="25.0" prefWidth="109.0" unFocusColor="#4688c9" />
+      <JFXTextField layoutX="18.0" layoutY="224.0" prefHeight="25.0" prefWidth="117.0" unFocusColor="#4688c9" />
+      <JFXTextField layoutX="163.0" layoutY="287.0" prefHeight="25.0" prefWidth="123.0" unFocusColor="#4688c9" />
+      <JFXTextField layoutX="18.0" layoutY="287.0" prefHeight="25.0" prefWidth="117.0" unFocusColor="#4688c9" />
+      <Label layoutX="28.0" layoutY="207.0" text="Type" textFill="#4688c9">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="163.0" layoutY="207.0" text="Loyer" textFill="#4688c9">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="16.0" layoutY="267.0" text="Forfaitaire" textFill="#4688c9">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="172.0" layoutY="267.0" text="Montant a payer" textFill="#4688c9">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <JFXTextField layoutX="172.0" layoutY="337.0" prefHeight="25.0" prefWidth="123.0" unFocusColor="#4688c9" />
+      <JFXTextField layoutX="26.0" layoutY="337.0" prefHeight="25.0" prefWidth="117.0" unFocusColor="#4688c9" />
+      <Label layoutX="24.0" layoutY="317.0" text="Date début" textFill="#4688c9">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="180.0" layoutY="317.0" text="Date fin" textFill="#4688c9">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <JFXButton layoutX="324.0" layoutY="369.0" prefHeight="37.0" prefWidth="199.0" styleClass="pink-btn" text="Imprimer">
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" glyphName="PRINT" size="17" />
+         </graphic>
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>

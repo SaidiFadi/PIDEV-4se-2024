@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="414.0" prefWidth="700.0" styleClass="backgrnd" stylesheets="@../projet/Application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LogementController">
+   <children>
+      <Label layoutX="55.0" layoutY="40.0" text="Rechercher">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="txt_searchid" layoutX="174.0" layoutY="41.0" promptText="identifient" unFocusColor="#4688c9" />
+      <JFXTextField fx:id="txt_adr" layoutX="24.0" layoutY="84.0" prefHeight="25.0" prefWidth="243.0" promptText="Adresse" unFocusColor="#4688c9" />
+      <JFXTextField fx:id="txt_superfice" layoutX="283.0" layoutY="84.0" promptText="Superfice" unFocusColor="#4688c9" />
+      <JFXComboBox fx:id="cb_region" layoutX="24.0" layoutY="130.0" prefHeight="25.0" prefWidth="135.0" promptText="Region" unFocusColor="#4688c9" />
+      <JFXComboBox fx:id="cb_province" layoutX="174.0" layoutY="131.0" onMouseClicked="#remplirProvince" prefHeight="25.0" prefWidth="135.0" promptText="province" unFocusColor="#4688c9" />
+      <JFXComboBox fx:id="cb_commune" layoutX="317.0" layoutY="131.0" onMouseClicked="#remplirCommune" prefHeight="25.0" prefWidth="118.0" promptText="commune" unFocusColor="#4688c9" />
+      <JFXComboBox fx:id="cb_type" layoutX="24.0" layoutY="181.0" prefHeight="25.0" prefWidth="135.0" promptText="type" unFocusColor="#4688c9" />
+      <JFXTextField fx:id="txt_loyer" layoutX="174.0" layoutY="186.0" promptText="loyer" unFocusColor="#4688c9" />
+      <Label fx:id="lab_url" layoutX="411.0" layoutY="202.0" text="Aucune sélectionée" textFill="#4688c9">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TableView fx:id="table_logement" layoutX="33.0" layoutY="224.0" onMouseClicked="#tableLogEvent" prefHeight="149.0" prefWidth="646.0" stylesheets="@../projet/Application.css" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="27.0">
+        <columns>
+          <TableColumn fx:id="col_id" prefWidth="75.0" text="Id" />
+          <TableColumn fx:id="col_adr" prefWidth="181.0" text="Adresse" />
+            <TableColumn fx:id="col_superfice" prefWidth="76.0" text="Superfice" />
+            <TableColumn fx:id="col_loyer" prefWidth="120.0" text="Loyer" />
+            <TableColumn fx:id="col_type" prefWidth="74.0" text="Type" />
+            <TableColumn fx:id="col_region" prefWidth="119.0" text="Region" />
+        </columns>
+      </TableView>
+      <JFXButton fx:id="btn_add" layoutX="267.0" layoutY="373.0" onAction="#ajouterLogement" prefHeight="25.0" prefWidth="72.0" styleClass="buttons" text="Ajouter" />
+      <JFXButton fx:id="btn_edit" layoutX="349.0" layoutY="373.0" onAction="#modifierLogement" prefHeight="25.0" prefWidth="72.0" styleClass="buttons" text="Modifier" />
+      <JFXButton fx:id="btn_delete" layoutX="434.0" layoutY="373.0" onAction="#supprimerLogement" styleClass="buttons" text="Supprimer" />
+      <JFXButton fx:id="icon_importer" layoutX="366.0" layoutY="195.0" onMouseClicked="#importerImage" prefHeight="25.0" prefWidth="11.0">
+         <graphic>
+            <FontAwesomeIcon glyphName="UPLOAD" />
+         </graphic>
+      </JFXButton>
+      <JFXButton layoutX="298.0" layoutY="41.0" onMouseClicked="#searchLogement" prefHeight="19.0" prefWidth="0.0">
+         <graphic>
+            <FontAwesomeIcon glyphName="SEARCH" />
+         </graphic>
+      </JFXButton>
+      <Pane layoutX="435.0" layoutY="9.0" prefHeight="186.0" prefWidth="256.0">
+         <children>
+            <ImageView fx:id="image_logement" fitHeight="186.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

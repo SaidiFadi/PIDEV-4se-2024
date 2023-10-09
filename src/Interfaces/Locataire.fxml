@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="414.0" prefWidth="700.0" styleClass="backgrnd" stylesheets="@../projet/Application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LocataireController">
+   <children>
+      <Label layoutX="14.0" layoutY="23.0" text="Rechercher">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="txt_searchCIN" layoutX="110.0" layoutY="23.0" onKeyTyped="#SearchLocataire" promptText="identifient" unFocusColor="#4688c9" />
+      <JFXTextField fx:id="txt_nom" layoutX="14.0" layoutY="73.0" prefHeight="25.0" prefWidth="227.0" promptText="Nom et Prenom" unFocusColor="#4688c9" />
+      <TableView fx:id="table_locataire" layoutX="254.0" layoutY="22.0" onMouseClicked="#LocataireSelect" prefHeight="299.0" prefWidth="432.0" stylesheets="@../projet/Application.css" AnchorPane.leftAnchor="254.0" AnchorPane.rightAnchor="14.0">
+        <columns>
+          <TableColumn fx:id="col_id" prefWidth="50.0" text="Id" />
+          <TableColumn fx:id="col_nom" prefWidth="98.0" text="NomCompet" />
+            <TableColumn fx:id="col_cin" prefWidth="78.0" text="CIN" />
+            <TableColumn fx:id="col_date" minWidth="0.0" prefWidth="132.0" text="DateDeNaissance" />
+            <TableColumn fx:id="col_tele" prefWidth="92.0" text="Telephone" />
+        </columns>
+      </TableView>
+      <JFXButton fx:id="btn_add" layoutX="267.0" layoutY="373.0" onAction="#addLocataire" prefHeight="25.0" prefWidth="72.0" styleClass="buttons" text="Ajouter" />
+      <JFXButton fx:id="btn_edit" layoutX="349.0" layoutY="373.0" onAction="#editLocataire" prefHeight="25.0" prefWidth="72.0" styleClass="buttons" text="Modifier" />
+      <JFXButton fx:id="btn_delet" layoutX="434.0" layoutY="373.0" onAction="#deleteLocataire" styleClass="buttons" text="Supprimer" />
+      <JFXTextField fx:id="txt_CIN" layoutX="14.0" layoutY="112.0" prefHeight="25.0" prefWidth="227.0" promptText="CIN" unFocusColor="#4688c9" />
+      <JFXTextField fx:id="txt_tele" layoutX="14.0" layoutY="147.0" prefHeight="25.0" prefWidth="227.0" promptText="Numéro de téléphone" unFocusColor="#4688c9" />
+      <JFXDatePicker fx:id="datePicker" defaultColor="#4688c9" layoutX="25.0" layoutY="195.0" prefHeight="25.0" prefWidth="215.0" promptText="Date de naissance" />
+      <ImageView fx:id="ImgImport" fitHeight="77.0" fitWidth="199.0" layoutX="28.0" layoutY="236.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="97.0" layoutY="321.0" text="Upload CIN" />
+      <Button fx:id="btn_import" layoutX="59.0" layoutY="318.0" mnemonicParsing="false" onAction="#importCIN">
+         <graphic>
+            <FontAwesomeIcon glyphName="UPLOAD" />
+         </graphic>
+      </Button>
+      <JFXButton layoutX="208.0" layoutY="24.0" onMouseClicked="#chercherL" prefHeight="0.0" prefWidth="2.0">
+         <graphic>
+            <FontAwesomeIcon glyphName="SEARCH" />
+         </graphic>
+      </JFXButton>
+   </children>
+</AnchorPane>

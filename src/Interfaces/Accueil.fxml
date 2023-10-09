@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="414.0" prefWidth="700.0" styleClass="backgrnd" stylesheets="@../projet/Application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AccueilController">
+   <children>
+      <Pane layoutX="217.0" layoutY="30.0" prefHeight="40.0" prefWidth="660.0" style="-fx-background-color: #7294AC;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <children>
+            <Label layoutX="27.0" layoutY="10.0" text="Disponibilité" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <FontAwesomeIcon fill="WHITE" glyphName="HOME" layoutX="8.0" layoutY="24.0" size="17" />
+            <Label fx:id="lab_nbr" layoutX="127.0" layoutY="10.0" prefHeight="21.0" prefWidth="16.0" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Label>
+            <Label layoutX="123.0" layoutY="12.0" text="(" />
+            <Label layoutX="141.0" layoutY="12.0" text=")" />
+         </children>
+      </Pane>
+      <JFXTextField fx:id="txt_loyer" layoutX="399.0" layoutY="195.0" prefHeight="25.0" prefWidth="239.0" unFocusColor="#4688c9" />
+      <Label layoutX="410.0" layoutY="168.0" text="Loyer" textFill="#4688c9">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="txt_superfice" layoutX="399.0" layoutY="266.0" prefHeight="25.0" prefWidth="239.0" unFocusColor="#4688c9" />
+      <Label layoutX="410.0" layoutY="239.0" text="Superfice" textFill="#4688c9">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="txt_region" layoutX="410.0" layoutY="318.0" prefHeight="25.0" prefWidth="239.0" unFocusColor="#4688c9" />
+      <Label layoutX="420.0" layoutY="291.0" text="Region" textFill="#4688c9">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="precedant" layoutX="455.0" layoutY="358.0" mnemonicParsing="false" onMouseClicked="#ShowPrecedant">
+         <graphic>
+            <FontAwesomeIcon fill="#4688c9" glyphName="CHEVRON_LEFT" size="17" />
+         </graphic>
+      </Button>
+      <Button fx:id="suivant" layoutX="586.0" layoutY="358.0" mnemonicParsing="false" onMouseClicked="#ShowSuivant">
+         <graphic>
+            <FontAwesomeIcon fill="#4688c9" glyphName="CHEVRON_RIGHT" size="17" />
+         </graphic>
+      </Button>
+      <JFXTextField fx:id="txt_adr" layoutX="399.0" layoutY="143.0" prefHeight="25.0" prefWidth="239.0" unFocusColor="#4688c9" />
+      <Label layoutX="410.0" layoutY="116.0" text="Adresse" textFill="#4688c9">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Pane layoutX="20.0" layoutY="73.0" prefHeight="309.0" prefWidth="338.0">
+         <children>
+            <ImageView fx:id="imageLog" fitHeight="309.0" fitWidth="338.0" layoutX="2.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
