@@ -210,20 +210,26 @@ public class LocationController implements Initializable {
      @FXML
     private void periode() {
         
-      Date dated = Date.from (dateDebut.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+    /*  Date dated = Date.from (dateDebut.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
        java.sql.Date dateDebut = new java.sql.Date (dated.getTime());
         Date datef = Date.from (dateFin.getValue().atStartOfDay (ZoneId.systemDefault()).toInstant());
         java.sql.Date dateFin= new java.sql.Date (datef.getTime());
     int days=daysBetween (dateDebut, dateFin);
     int mois=days/30;
-    txt_periode.setText(String.valueOf(days));
-  /* LocalDate dateDebut = dateDebut.getValue();
-    LocalDate dateFin = dateFin.getValue();
+    txt_periode.setText(String.valueOf(days)); */
+    if (dateDebut.getValue() != null && dateFin.getValue() != null) {
+        Date dated = Date.from(dateDebut.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        java.sql.Date sqlDateDebut = new java.sql.Date(dated.getTime());
+        
+        Date datef = Date.from(dateFin.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        java.sql.Date sqlDateFin = new java.sql.Date(datef.getTime());
+        
+        int days = daysBetween(sqlDateDebut, sqlDateFin);
+        int months = days / 30;
+        txt_periode.setText(String.valueOf(days));
+    }
+}
     
-    Period period = Period.between(dateDebut, dateFin);
-    int months = period.getMonths();
-    txt_periode.setText(String.valueOf(months));*/
-    } 
     public int daysBetween (java.sql.Date dl, java.sql.Date d2){
         return (int) ((d2.getTime()-dl.getTime())/(1000*60*60*24)); 
        
